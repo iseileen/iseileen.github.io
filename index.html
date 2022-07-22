@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>我的記帳本</title> 
+    <!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+	<link rel="manifest" href="icon/manifest.json">
+
+<style>
+*{
+  box-sizing: border-box;
+}
+body, html {
+	font-family: 'Roboto Slab', serif;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+}
+body {
+  background-color: #e9eded;
+
+}
+
+.add {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+	filter:drop-shadow(0px 3px 3px rgba(0, 0, 0,0.3));
+}
+
+.delbtn{
+	color:#330000;
+	font-size:25px;
+	text-decoration:none;
+}
+</style>
+<!--svg symbol-->
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="delete" viewBox="0 0 16 16">
+    <title>delete</title>
+    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+  </symbol>
+  <symbol id="pay" viewBox="0 0 16 16">
+    <title>pay</title>
+    <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z"/>
+	<path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm13 2v5H1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm-1 9H2a1 1 0 0 1-1-1v-1h14v1a1 1 0 0 1-1 1z"/>
+  </symbol>
+  <symbol id="income" viewBox="0 0 16 16">
+    <title>income</title>
+    <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z"/>
+	<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+	<path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+  </symbol>
+  <symbol id="addNew" viewBox="0 0 16 16">
+    <title>addNew</title>
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+  </symbol>
+  <symbol id="goback" viewBox="0 0 16 16">
+    <title>goback</title>
+    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+  </symbol>
+
+</svg>
+
+
+</head>
+<body>
+<!--navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">我的記帳本</a>
+
+    <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    全部
+  </button>
+  <ul class="dropdown-menu" id="selectMonth" aria-labelledby="dropdownMenuButton1"> </ul>
+</div>
+  </div>
+</nav>
+<!--btn-group-->
+<div class="container">
+	<div class="btn-group btn-group-lg m-3 d-flex" role="group" aria-label="Button group">
+	  <button type="button" class="btn btn-outline-secondary btn-light w-100">收入<br><span id="incomeSpan">0</span></button>
+	  <button type="button" class="btn btn-outline-secondary btn-light w-100">支出<br><span id="paySpan">0</span></button>
+	  <button class="btn btn-outline-secondary btn-light w-100">結餘<br><span id="totalSpan">0</span></button>
+	</div>
+	<div class="cards" id="cards">
+		<!--顯示indexeddb資料庫資料-->
+		<div id="card-item"></div>
+	</div>
+</div>
+
+<!--新增收入與支出按鈕-->
+
+<div class="add">
+<a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<svg class="addNew" width="45" height="45" fill="#ff9900"><use xlink:href="#addNew"/></svg></a>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+		<select name="addKind" id="addKind" class="form-select">
+			<option value="pay" selected>支出
+			<option value="income">收入
+        </select>
+		</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+		<div class="mb-3">
+		<label for="inputDate" class="form-label">日期</label>
+        <input type="date" name="date" class="form-control" id="inputDate">
+		</div>
+		<div class="mb-3">
+		<label for="inputMoney" class="form-label">金額</label>
+		<input type="number" name="money" class="form-control" id="inputMoney">
+		</div>
+		<div class="mb-3">
+		<label for="inputMemo" class="form-label">備註</label>
+		<input type="text" name="memo" class="form-control" id="inputMemo">
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+        <button type="button" class="btn btn-primary" id="savebtn">儲存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="js/indexedDB.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+	navigator.serviceWorker.register("sw.js").then(function(){
+		console.log("Service Worker register OK")
+	}).catch(function(err){
+		console.log("Service Worker register fail:"+err)
+	});
+}
+</script>
+</body>
+</html>

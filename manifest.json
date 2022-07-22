@@ -1,0 +1,21 @@
+{
+  "short_name": "SaveMoney",
+  "name": "SaveMoney",
+  "icons": [
+    {
+      "src": "icon/192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon/310.png",
+      "type": "image/png",
+      "sizes": "310x310"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#1f2022",
+  "background_color": "#1f2022"
+}
